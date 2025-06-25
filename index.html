@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WellnessAI - Your Personal Wellness Coach</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>🌟 WellnessAI</h2>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">Dashboard</button>
+                <button class="nav-item" data-tab="checkin">Check-in</button>
+                <button class="nav-item" data-tab="goals">Goals</button>
+                <button class="nav-item" data-tab="coach">AI Coach</button>
+                <button class="nav-item" data-tab="progress">Progress</button>
+                <button class="nav-item" data-tab="profile">Profile</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="tab-content active">
+            <div class="container">
+                <div class="welcome-section">
+                    <h1>Welcome back, <span id="user-name">Sarah</span>! 🌅</h1>
+                    <p class="daily-quote">"The journey of a thousand miles begins with one step." - Lao Tzu</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-content">
+                            <h3 id="current-streak">0</h3>
+                            <p>Day Streak</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <h3 id="weekly-goals">0</h3>
+                            <p>Goals This Week</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💚</div>
+                        <div class="stat-content">
+                            <h3 id="wellness-score">0</h3>
+                            <p>Wellness Score</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendations-section">
+                    <h2>Today's Recommendations</h2>
+                    <div class="recommendations-grid" id="recommendations-grid">
+                        <!-- Recommendations will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="btn btn--primary" onclick="switchTab('checkin')">Daily Check-in</button>
+                    <button class="btn btn--secondary" onclick="switchTab('goals')">Set New Goal</button>
+                    <button class="btn btn--outline" onclick="switchTab('coach')">Chat with AI Coach</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Check-in Section -->
+        <section id="checkin" class="tab-content">
+            <div class="container">
+                <h1>Daily Check-in</h1>
+                <div class="checkin-form">
+                    <div class="form-group">
+                        <label class="form-label">How are you feeling today?</label>
+                        <div class="mood-selector">
+                            <div class="mood-option" data-mood="1">😢</div>
+                            <div class="mood-option" data-mood="2">😞</div>
+                            <div class="mood-option" data-mood="3">😐</div>
+                            <div class="mood-option" data-mood="4">🙂</div>
+                            <div class="mood-option" data-mood="5">😊</div>
+                            <div class="mood-option" data-mood="6">😄</div>
+                            <div class="mood-option" data-mood="7">😁</div>
+                            <div class="mood-option" data-mood="8">🤗</div>
+                            <div class="mood-option" data-mood="9">😍</div>
+                            <div class="mood-option" data-mood="10">🥰</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Energy Level (1-10)</label>
+                        <input type="range" class="energy-slider" min="1" max="10" value="5" id="energy-level">
+                        <div class="slider-value" id="energy-value">5</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Sleep Quality</label>
+                        <div class="star-rating" id="sleep-rating">
+                            <span data-rating="1">⭐</span>
+                            <span data-rating="2">⭐</span>
+                            <span data-rating="3">⭐</span>
+                            <span data-rating="4">⭐</span>
+                            <span data-rating="5">⭐</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Stress Level</label>
+                        <div class="stress-selector">
+                            <button class="stress-option" data-stress="low">Low</button>
+                            <button class="stress-option" data-stress="medium">Medium</button>
+                            <button class="stress-option" data-stress="high">High</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Today's Habits</label>
+                        <div class="habits-checklist">
+                            <label class="habit-item">
+                                <input type="checkbox" name="habit" value="exercise">
+                                <span>Did you exercise?</span>
+                            </label>
+                            <label class="habit-item">
+                                <input type="checkbox" name="habit" value="water">
+                                <span>Drank enough water?</span>
+                            </label>
+                            <label class="habit-item">
+                                <input type="checkbox" name="habit" value="meditation">
+                                <span>Practiced mindfulness?</span>
+                            </label>
+                            <label class="habit-item">
+                                <input type="checkbox" name="habit" value="sleep">
+                                <span>Got quality sleep?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Additional Notes</label>
+                        <textarea class="form-control" id="daily-notes" placeholder="How was your day? Any insights or challenges?"></textarea>
+                    </div>
+
+                    <button class="btn btn--primary btn--full-width" onclick="submitCheckin()">Complete Check-in</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section id="goals" class="tab-content">
+            <div class="container">
+                <h1>Goals & Habits</h1>
+                
+                <div class="goals-header">
+                    <button class="btn btn--primary" onclick="showGoalForm()">+ Add New Goal</button>
+                </div>
+
+                <div class="goals-grid" id="goals-grid">
+                    <!-- Goals will be populated by JavaScript -->
+                </div>
+
+                <!-- Goal Form Modal -->
+                <div id="goal-modal" class="modal">
+                    <div class="modal-content">
+                        <h2>Create New Goal</h2>
+                        <form id="goal-form">
+                            <div class="form-group">
+                                <label class="form-label">Goal Title</label>
+                                <input type="text" class="form-control" id="goal-title" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Category</label>
+                                <select class="form-control" id="goal-category">
+                                    <option value="fitness">🏃‍♂️ Fitness & Movement</option>
+                                    <option value="nutrition">🥗 Nutrition & Diet</option>
+                                    <option value="sleep">😴 Sleep & Recovery</option>
+                                    <option value="mental">🧠 Mental Health</option>
+                                    <option value="stress">🧘‍♀️ Stress Management</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Target Date</label>
+                                <input type="date" class="form-control" id="goal-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" id="goal-description"></textarea>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="button" class="btn btn--outline" onclick="hideGoalForm()">Cancel</button>
+                                <button type="submit" class="btn btn--primary">Create Goal</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coach Section -->
+        <section id="coach" class="tab-content">
+            <div class="container">
+                <div class="coach-header">
+                    <div class="coach-info">
+                        <div class="coach-avatar">🤖</div>
+                        <div>
+                            <h1>Alex the Wellness Coach</h1>
+                            <p>I'm here to support your wellness journey!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message coach-message">
+                            <div class="message-content">
+                                Hello! I'm Alex, your AI wellness coach. How can I help you today? 🌟
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-starters">
+                        <button class="starter-btn" onclick="sendMessage('I\\'m feeling stressed')">I'm feeling stressed</button>
+                        <button class="starter-btn" onclick="sendMessage('Help me with meal planning')">Help me with meal planning</button>
+                        <button class="starter-btn" onclick="sendMessage('I need motivation')">I need motivation</button>
+                        <button class="starter-btn" onclick="sendMessage('How do I build better habits?')">How do I build better habits?</button>
+                    </div>
+
+                    <div class="chat-input">
+                        <input type="text" class="form-control" id="chat-input" placeholder="Type your message...">
+                        <button class="btn btn--primary" onclick="sendChatMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress" class="tab-content">
+            <div class="container">
+                <h1>Progress Tracking</h1>
+                
+                <div class="progress-cards">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Wellness Score Trend</h3>
+                            <canvas id="wellness-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Category Breakdown</h3>
+                            <canvas id="category-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights-section">
+                    <h2>AI Insights</h2>
+                    <div class="insights-grid" id="insights-grid">
+                        <!-- Insights will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="tab-content">
+            <div class="container">
+                <h1>Profile & Settings</h1>
+                
+                <div class="profile-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Personal Information</h3>
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" id="profile-name" value="Sarah">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Primary Wellness Goals</label>
+                                <textarea class="form-control" id="profile-goals" placeholder="What are your main wellness objectives?"></textarea>
+                            </div>
+                            <button class="btn btn--primary" onclick="updateProfile()">Update Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Subscription</h3>
+                            <div class="pricing-tiers">
+                                <div class="pricing-tier basic">
+                                    <h4>Basic - $15/month</h4>
+                                    <ul>
+                                        <li>Daily check-ins</li>
+                                        <li>Basic AI recommendations</li>
+                                        <li>Progress tracking</li>
+                                        <li>Habit streak counter</li>
+                                    </ul>
+                                    <div class="status status--success">Current Plan</div>
+                                </div>
+                                <div class="pricing-tier premium">
+                                    <h4>Premium - $40/month</h4>
+                                    <ul>
+                                        <li>All Basic features</li>
+                                        <li>Personalized coaching sessions</li>
+                                        <li>Wearable device integration</li>
+                                        <li>Advanced analytics</li>
+                                        <li>Priority support</li>
+                                    </ul>
+                                    <button class="btn btn--primary">Upgrade to Premium</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
